@@ -8,6 +8,8 @@
 
 name: Java CI with Maven
 
+contents: write
+
 on:
   push:
     branches: [ "main" ]
