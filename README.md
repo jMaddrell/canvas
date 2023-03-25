@@ -25,7 +25,7 @@ java -jar target/canvas-1.0-SNAPSHOT.jar
 - Tested on Windows 11 with Azul 11
 - Tested on ubuntu via GitHub Actions with temurin 11
 - If AppTest.itHandlesInput() is failing this is likely because IntelliJ keeps trimming trailing whitespace at the end of lines, please reset the file.
-- To enable object to clip into each other pass "enableClipping" as an argument eg:
+- To enable objects to clip into each other pass "enableClipping" as an argument eg:
 
 ```shell
 mvn exec:java -Dexec.args="enableClipping"
