@@ -14,7 +14,9 @@ import io.vavr.control.Try;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-import static io.vavr.API.*;
+import static io.vavr.API.$;
+import static io.vavr.API.Case;
+import static io.vavr.API.Match;
 
 public class App {
     private boolean enableClipping;
@@ -68,7 +70,7 @@ public class App {
         return false;
     }
 
-    private static Command getCommand(StringTokenizer tokenizer) {
+    protected static Command getCommand(StringTokenizer tokenizer) {
         var command = Match(tokenizer.nextToken()).of(
                 Case($("Q"), new QuitCommand()),
                 Case($("C"), new CanvasCommand()),
