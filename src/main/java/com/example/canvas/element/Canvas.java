@@ -3,7 +3,6 @@ package com.example.canvas.element;
 import com.example.exception.InvalidArgumentsException;
 import io.vavr.control.Try;
 import lombok.EqualsAndHashCode;
-import lombok.Generated;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -12,7 +11,6 @@ import java.util.List;
 import java.util.Stack;
 
 
-@Generated
 @EqualsAndHashCode
 public class Canvas extends Element {
     public static final String INVALID_ELEMENT_LOCATION_MESSAGE = "Element must be within the bounds of the canvas";
@@ -87,7 +85,6 @@ public class Canvas extends Element {
     }
 
     private boolean isOnCanvas(Pixel pixel) {
-//        TODO: test
         return (pixel.getX() > 0 && pixel.getX() <= width && pixel.getY() > 0 && pixel.getY() <= height);
     }
 }
