@@ -21,7 +21,7 @@ import static io.vavr.API.Match;
 public class App {
     private boolean enableClipping;
 
-    private ConsoleRenderer consoleRenderer;
+    protected ConsoleRenderer consoleRenderer;
 
     public App(boolean enableClipping) {
         this.enableClipping = enableClipping;
@@ -71,14 +71,18 @@ public class App {
     }
 
     protected static Command getCommand(StringTokenizer tokenizer) {
-        var command = Match(tokenizer.nextToken()).of(
-                Case($("Q"), new QuitCommand()),
-                Case($("C"), new CanvasCommand()),
-                Case($("L"), new LineCommand()),
-                Case($("R"), new RectangleCommand()),
-                Case($(), new HelpCommand())
-        );
-        return command;
+        if (tokenizer.hasMoreTokens()) {
+            var command = Match(tokenizer.nextToken()).of(
+                    Case($("Q"), new QuitCommand()),
+                    Case($("C"), new CanvasCommand()),
+                    Case($("L"), new LineCommand()),
+                    Case($("R"), new RectangleCommand()),
+                    Case($(), new HelpCommand())
+            );
+            return command;
+        }
+
+        return new HelpCommand();
     }
 
     public static void main(String[] args) {
