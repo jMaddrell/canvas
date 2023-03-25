@@ -65,7 +65,10 @@ public class App {
                     System.out.println();
                     System.out.println("Please create a canvas first.");
                 } else {
-                    this.consoleRenderer.getCanvas().addElement(data);
+                    Try<Boolean> result = this.consoleRenderer.getCanvas().addElement(data);
+                    if (result.isFailure()) {
+                        System.out.println(result.getCause().getMessage());
+                    }
                 }
             }
         }

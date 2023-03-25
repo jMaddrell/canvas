@@ -3,6 +3,7 @@ package com.example;
 import com.example.canvas.element.*;
 import com.example.command.*;
 import com.example.rendering.ConsoleRenderer;
+import io.vavr.control.Try;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -19,7 +20,12 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.contentOf;
 import static org.awaitility.Awaitility.await;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 class AppTest {
     private static Stream<Arguments> commandsProvider() {
@@ -98,6 +104,9 @@ class AppTest {
     void itAddsElementToCanvas(String input, Element element) {
         var app = new App(false);
         var canvas = mock(Canvas.class);
+        given(canvas.addElement(any(Element.class)))
+                .willReturn(Try.of(() -> Boolean.TRUE));
+
         app.consoleRenderer.setCanvas(canvas);
         app.processCommand(input);
 
