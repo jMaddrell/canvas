@@ -16,8 +16,8 @@ public class CanvasCommand implements Command {
     public Try<Element> invoke(StringTokenizer tokenizer) {
         if (tokenizer.countTokens() == 2) {
             return Try.of(() -> {
-                int width = Integer.parseInt(tokenizer.nextToken());
-                int height = Integer.parseInt(tokenizer.nextToken());
+                var width = Integer.parseInt(tokenizer.nextToken());
+                var height = Integer.parseInt(tokenizer.nextToken());
                 return (Element) new Canvas(width, height);
             }).mapFailure(Case($(instanceOf(NumberFormatException.class)), e -> new InvalidArgumentsException("Canvas width and height must be a positive number.", e)));
         }

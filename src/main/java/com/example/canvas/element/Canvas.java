@@ -30,7 +30,7 @@ public class Canvas extends Element {
         char[][] buffer = new char[this.height][this.width];
 
         // Create a blank canvas
-        for (int y = 0; y < this.height; y++) {
+        for (var y = 0; y < this.height; y++) {
             Arrays.fill(buffer[y], ' ');
         }
 
@@ -45,8 +45,8 @@ public class Canvas extends Element {
         // Convert the buffer to a list of pixels
         // Could potentially remove this and return the buffer directly to speed up rendering
         // however it's required for now as Canvas extends Element
-        for (int y = 0; y < this.height; y++) {
-            for (int x = 0; x < this.width; x++) {
+        for (var y = 0; y < this.height; y++) {
+            for (var x = 0; x < this.width; x++) {
                 pixels.add(new Pixel(x, y, buffer[y][x]));
             }
         }

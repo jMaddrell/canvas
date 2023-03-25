@@ -17,8 +17,8 @@ public class RectangleCommand implements Command {
     public Try<Element> invoke(StringTokenizer tokenizer) {
         if (tokenizer.countTokens() == 4) {
             return Try.of(() -> {
-                Pixel start = new Pixel(Integer.parseInt(tokenizer.nextToken()), Integer.parseInt(tokenizer.nextToken()));
-                Pixel end = new Pixel(Integer.parseInt(tokenizer.nextToken()), Integer.parseInt(tokenizer.nextToken()));
+                var start = new Pixel(Integer.parseInt(tokenizer.nextToken()), Integer.parseInt(tokenizer.nextToken()));
+                var end = new Pixel(Integer.parseInt(tokenizer.nextToken()), Integer.parseInt(tokenizer.nextToken()));
                 return (Element) new Rectangle(start, end);
             }).mapFailure(Case($(instanceOf(NumberFormatException.class)), e -> new InvalidArgumentsException("Rectangle coordinates must be a positive number", e)));
         }

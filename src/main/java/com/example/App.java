@@ -39,19 +39,13 @@ public class App {
     }
 
     public boolean processCommand(String input) {
-        StringTokenizer tokenizer = new StringTokenizer(input, " ");
+        var tokenizer = new StringTokenizer(input, " ");
 
         if (!tokenizer.hasMoreTokens()) {
             return false;
         }
 
-        var command = Match(tokenizer.nextToken()).of(
-                Case($("Q"), new QuitCommand()),
-                Case($("C"), new CanvasCommand()),
-                Case($("L"), new LineCommand()),
-                Case($("R"), new RectangleCommand()),
-                Case($(), new HelpCommand())
-        );
+        var command = getCommand(tokenizer);
 
         Try<Element> element = command.invoke(tokenizer);
 
@@ -72,6 +66,17 @@ public class App {
         }
 
         return false;
+    }
+
+    private static Command getCommand(StringTokenizer tokenizer) {
+        var command = Match(tokenizer.nextToken()).of(
+                Case($("Q"), new QuitCommand()),
+                Case($("C"), new CanvasCommand()),
+                Case($("L"), new LineCommand()),
+                Case($("R"), new RectangleCommand()),
+                Case($(), new HelpCommand())
+        );
+        return command;
     }
 
     public static void main(String[] args) {

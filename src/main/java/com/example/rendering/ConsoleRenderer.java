@@ -26,8 +26,8 @@ public class ConsoleRenderer {
 
     public String draw() {
         if (this.canvas != null) {
-            StringBuilder output = new StringBuilder();
-            List<Pixel> data = this.canvas.draw(this.enableClipping);
+            var output = new StringBuilder();
+            var data = this.canvas.draw(this.enableClipping);
 
             // Border is two chars wider than the canvas
             var borderWidth = this.getCanvas().getWidth() + 2;
@@ -36,8 +36,8 @@ public class ConsoleRenderer {
             output.append("-".repeat(borderWidth));
             output.append(System.lineSeparator());
 
-            for (int y = 0; y < this.canvas.getHeight(); y++) {
-                int finalY = y;
+            for (var y = 0; y < this.canvas.getHeight(); y++) {
+                var finalY = y;
 
                 String pixels = data.stream()
                         .filter(pixel -> (pixel.getY() == finalY))
