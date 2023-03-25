@@ -185,6 +185,37 @@ class AppTest {
     }
 
     @Test
+    void itDisplaysErrorForInvalidElement() throws InterruptedException {
+        PrintStream standardOut = System.out;
+        InputStream stdIn = System.in;
+
+        ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStreamCaptor));
+
+
+        var testInput = String.format(
+                "C 20 4%sL 21 5 22 5%sQ%s",
+                System.lineSeparator(),
+                System.lineSeparator(),
+                System.lineSeparator()
+        );
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(testInput.getBytes());
+        System.setIn(inputStream);
+
+        var app = new App(false);
+
+        new Thread(() -> App.main(null)).start();
+
+        await().atMost(5, SECONDS)
+                .untilAsserted(() -> assertThat(outputStreamCaptor.toString()).isEqualTo(contentOf(this.getClass().getResource("/input/3.txt"))));
+
+        // Restore stdout & stdin
+        System.setOut(standardOut);
+        System.setIn(stdIn);
+    }
+
+    @Test
     void itParsesArguments() {
         assertThat(App.isClippingEnabled(null)).isFalse();
         assertThat(App.isClippingEnabled(new String[]{"en"})).isFalse();
