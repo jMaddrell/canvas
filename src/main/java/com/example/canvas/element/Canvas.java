@@ -65,6 +65,7 @@ public class Canvas extends Element {
                 return this.elements.add(element);
             }
 
+//            TODO: test
             throw new InvalidArgumentsException("Element must be within the bounds of the canvas");
         });
     }
@@ -75,8 +76,11 @@ public class Canvas extends Element {
 
         boolean onCanvas = isOnCanvas(start) && isOnCanvas(end);
 
+        //    TODO: Test bounds checking on element creation
+
         if (element instanceof Line) {
             if (start.getX() != end.getX() && start.getY() != end.getY()) {
+//                TODO: test
                 throw new InvalidArgumentsException("Not a valid line, diagonals are not supported");
             }
         }
@@ -85,6 +89,7 @@ public class Canvas extends Element {
     }
 
     private boolean isOnCanvas(Pixel pixel) {
+//        TODO: test
         return (pixel.getX() > 0 && pixel.getX() <= width && pixel.getY() > 0 && pixel.getY() <= height);
     }
 }

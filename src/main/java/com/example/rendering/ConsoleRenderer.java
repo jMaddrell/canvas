@@ -18,6 +18,7 @@ public class ConsoleRenderer {
     private boolean enableClipping = false;
 
     public void display() {
+//        TODO: test
         if (this.canvas != null) {
             System.out.println(draw());
             System.out.println();
@@ -58,6 +59,7 @@ public class ConsoleRenderer {
             return output.toString();
         }
 
+//        TODO test
         return null;
     }
 }
