@@ -43,10 +43,6 @@ public class App {
     public boolean processCommand(String input) {
         var tokenizer = new StringTokenizer(input, " ");
 
-        if (!tokenizer.hasMoreTokens()) {
-            return false;
-        }
-
         var command = getCommand(tokenizer);
 
         Try<Element> element = command.invoke(tokenizer);

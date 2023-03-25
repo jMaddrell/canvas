@@ -59,7 +59,9 @@ class AppTest {
                 Arguments.of("C", CanvasCommand.INVALID_COMMAND_MESSAGE),
                 Arguments.of("C 1", CanvasCommand.INVALID_COMMAND_MESSAGE),
                 Arguments.of("C test 3", CanvasCommand.INVALID_NUMBER_MESSAGE),
-                Arguments.of("C 1 -3", Pixel.INVALID_COORDINATE_MESSAGE)
+                Arguments.of("C 1 -3", Pixel.INVALID_COORDINATE_MESSAGE),
+                Arguments.of("H", HelpCommand.HELP_MESSAGE),
+                Arguments.of("", HelpCommand.HELP_MESSAGE)
         );
     }
 
@@ -73,14 +75,12 @@ class AppTest {
         var app = new App(false);
 
         app.processCommand(input);
-        assertThat(outputStreamCaptor.toString().trim()).contains(expected);
+        assertThat(outputStreamCaptor.toString()).contains(expected);
 
         // Restore stdout
         System.setOut(standardOut);
-
     }
-//    TODO: test exception output
-//    TODO: processCommand("")
-//    TODO: processCommand()
+
+//    TODO: processCommand() - with valid values
 //    TODO: run()
 }
