@@ -1,46 +1,57 @@
 package com.example.rendering;
 
-
+import com.example.App;
 import com.example.canvas.element.Canvas;
-import com.example.canvas.element.Element;
 import com.example.canvas.element.Line;
 import com.example.canvas.element.Pixel;
-import com.example.canvas.element.Rectangle;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.stream.Stream;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.contentOf;
+import static org.junit.jupiter.api.Assertions.*;
+
 class ConsoleRendererTest {
-    private static ConsoleRenderer renderer;
 
-    @BeforeAll
-    static void setup() {
-        renderer = new ConsoleRenderer();
+    @Test
+    void itHandlesMissingCanvas() {
+        var renderer = new ConsoleRenderer();
+        assertNull(renderer.draw());
+    }
+
+    @Test
+    void itPrintsNothingIfMissingCanvas() {
+        PrintStream standardOut = System.out;
+        ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStreamCaptor));
+
+        var renderer = new ConsoleRenderer();
+        renderer.display();
+
+        assertThat(outputStreamCaptor.toString()).isBlank();
+
+        // Restore stdout
+        System.setOut(standardOut);
+    }
+
+    @Test
+    void itDisplaysOnConsole() {
+        PrintStream standardOut = System.out;
+        ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStreamCaptor));
+
+        var renderer = new ConsoleRenderer();
         renderer.setCanvas(new Canvas(20, 4));
-    }
+        renderer.getCanvas().addElement(new Line(new Pixel(1, 2), new Pixel(6, 2)));
 
-    private static Stream<Arguments> examplesProvider() {
-        return Stream.of(
-                Arguments.of(null, "/examples/1.txt"),
-                Arguments.of(new Line(new Pixel(1, 2), new Pixel(6, 2)), "/examples/2.txt"),
-                Arguments.of(new Line(new Pixel(6,3), new Pixel(6,4)), "/examples/3.txt"),
-                Arguments.of(new Rectangle(new Pixel(16, 1), new Pixel(20, 3)), "/examples/4.txt")
-        );
-    }
+        renderer.display();
 
-    @ParameterizedTest
-    @MethodSource("examplesProvider")
-    void itDrawsExpectedOutput(Element element, String exampleOutput) {
-        if (element != null) {
-            renderer.getCanvas().addElement(element);
-        }
+        assertThat(outputStreamCaptor.toString()).contains(contentOf(this.getClass().getResource("/examples/2.txt")));
 
-        assertThat(renderer.draw()).isEqualTo(contentOf(this.getClass().getResource(exampleOutput)));
+        // Restore stdout
+        System.setOut(standardOut);
     }
-//TODO: Check tests run on windows (/ vs \)
 }

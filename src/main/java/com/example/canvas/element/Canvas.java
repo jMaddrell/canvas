@@ -3,7 +3,6 @@ package com.example.canvas.element;
 import com.example.exception.InvalidArgumentsException;
 import io.vavr.control.Try;
 import lombok.EqualsAndHashCode;
-import lombok.Generated;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -12,9 +11,11 @@ import java.util.List;
 import java.util.Stack;
 
 
-@Generated
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class Canvas extends Element {
+    public static final String INVALID_ELEMENT_LOCATION_MESSAGE = "Element must be within the bounds of the canvas";
+    public static final String INVALID_LINE_MESSAGE = "Not a valid line, diagonals are not supported";
+    public static final String INVALID_RECT_MESSAGE = "Not a valid rectangle, must not be a line";
     @Getter
     private final int width;
 
@@ -31,6 +32,7 @@ public class Canvas extends Element {
         this.elements = new Stack<>();
     }
 
+    @Override
     public List<Pixel> draw(boolean enableClipping) {
         char[][] buffer = new char[this.height][this.width];
 
@@ -65,8 +67,7 @@ public class Canvas extends Element {
                 return this.elements.add(element);
             }
 
-//            TODO: test
-            throw new InvalidArgumentsException("Element must be within the bounds of the canvas");
+            throw new InvalidArgumentsException(INVALID_ELEMENT_LOCATION_MESSAGE);
         });
     }
 
@@ -76,12 +77,15 @@ public class Canvas extends Element {
 
         boolean onCanvas = isOnCanvas(start) && isOnCanvas(end);
 
-        //    TODO: Test bounds checking on element creation
-
         if (element instanceof Line) {
+            // Cant be a diagonal
             if (start.getX() != end.getX() && start.getY() != end.getY()) {
-//                TODO: test
-                throw new InvalidArgumentsException("Not a valid line, diagonals are not supported");
+                throw new InvalidArgumentsException(INVALID_LINE_MESSAGE);
+            }
+        } else if (element instanceof Rectangle) {
+            // Cant be a line
+            if (start.getX() == end.getX() || start.getY() == end.getY()) {
+                throw new InvalidArgumentsException(INVALID_RECT_MESSAGE);
             }
         }
 
@@ -89,7 +93,6 @@ public class Canvas extends Element {
     }
 
     private boolean isOnCanvas(Pixel pixel) {
-//        TODO: test
         return (pixel.getX() > 0 && pixel.getX() <= width && pixel.getY() > 0 && pixel.getY() <= height);
     }
 }

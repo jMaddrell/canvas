@@ -2,7 +2,6 @@ package com.example.command;
 
 import com.example.canvas.element.Element;
 import com.example.exception.InvalidArgumentsException;
-import io.vavr.NotImplementedError;
 import io.vavr.control.Try;
 
 import java.util.StringTokenizer;
@@ -21,7 +20,6 @@ public class HelpCommand implements Command {
             System.lineSeparator();
 
     public Try<Element> invoke(StringTokenizer tokenizer) {
-
         return Try.failure(new InvalidArgumentsException(HELP_MESSAGE));
     }
 }

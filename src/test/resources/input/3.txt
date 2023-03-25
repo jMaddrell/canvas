@@ -1,0 +1,18 @@
+enter command: 
+----------------------
+|                    |
+|                    |
+|                    |
+|                    |
+----------------------
+
+enter command: Element must be within the bounds of the canvas
+
+----------------------
+|                    |
+|                    |
+|                    |
+|                    |
+----------------------
+
+enter command: 

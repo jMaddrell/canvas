@@ -25,6 +25,7 @@ public class CanvasCommand implements Command {
                 return (Element) new Canvas(width, height);
             }).mapFailure(Case($(instanceOf(NumberFormatException.class)), e -> new InvalidArgumentsException(INVALID_NUMBER_MESSAGE, e)));
         }
+
         return Try.failure(new InvalidArgumentsException(INVALID_COMMAND_MESSAGE));
     }
 }

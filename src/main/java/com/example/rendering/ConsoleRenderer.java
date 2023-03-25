@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Comparator;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class ConsoleRenderer {
@@ -18,7 +17,6 @@ public class ConsoleRenderer {
     private boolean enableClipping = false;
 
     public void display() {
-//        TODO: test
         if (this.canvas != null) {
             System.out.println(draw());
             System.out.println();
@@ -59,7 +57,6 @@ public class ConsoleRenderer {
             return output.toString();
         }
 
-//        TODO test
         return null;
     }
 }

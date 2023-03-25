@@ -1,13 +1,11 @@
 package com.example.canvas.element;
 
 import lombok.EqualsAndHashCode;
-import lombok.Generated;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Generated
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class Rectangle extends Element {
     private List<Pixel> pixels;
 
@@ -15,6 +13,7 @@ public class Rectangle extends Element {
         super(start, end);
     }
 
+    @Override
     List<Pixel> draw(boolean enableClipping) {
         if (this.pixels == null) {
             var minX = Math.min(this.start.getX(), this.end.getX());
@@ -35,6 +34,7 @@ public class Rectangle extends Element {
                 }
             }
         }
+
         return this.pixels;
     }
 }

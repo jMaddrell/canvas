@@ -19,17 +19,15 @@ import static io.vavr.API.Case;
 import static io.vavr.API.Match;
 
 public class App {
-    private boolean enableClipping;
 
     protected ConsoleRenderer consoleRenderer;
 
     public App(boolean enableClipping) {
-        this.enableClipping = enableClipping;
         this.consoleRenderer = new ConsoleRenderer();
+        this.consoleRenderer.setEnableClipping(enableClipping);
     }
 
     public void run() {
-//        TODO: test
         boolean quit = false;
 
         try (Scanner scanner = new Scanner(System.in)) {
@@ -37,6 +35,7 @@ public class App {
                 this.consoleRenderer.display();
                 System.out.print("enter command: ");
                 quit = processCommand(scanner.nextLine());
+                System.out.println();
             }
         }
     }
@@ -60,7 +59,18 @@ public class App {
             if (data instanceof Canvas) {
                 this.consoleRenderer.setCanvas((Canvas) data);
             } else {
-                this.consoleRenderer.getCanvas().addElement(data);
+                Canvas canvas = this.consoleRenderer.getCanvas();
+
+                if (canvas == null) {
+                    System.out.println();
+                    System.out.println("Please create a canvas first.");
+                } else {
+                    Try<Boolean> result = canvas.addElement(data);
+
+                    if (result.isFailure()) {
+                        System.out.println(result.getCause().getMessage());
+                    }
+                }
             }
         }
 
@@ -69,20 +79,24 @@ public class App {
 
     protected static Command getCommand(StringTokenizer tokenizer) {
         if (tokenizer.hasMoreTokens()) {
-            var command = Match(tokenizer.nextToken()).of(
+            return Match(tokenizer.nextToken()).of(
                     Case($("Q"), new QuitCommand()),
                     Case($("C"), new CanvasCommand()),
                     Case($("L"), new LineCommand()),
                     Case($("R"), new RectangleCommand()),
                     Case($(), new HelpCommand())
             );
-            return command;
         }
 
         return new HelpCommand();
     }
 
     public static void main(String[] args) {
-        new App(false).run();
+        boolean enableClipping = isClippingEnabled(args);
+        new App(enableClipping).run();
+    }
+
+    public static boolean isClippingEnabled(String[] args) {
+        return args != null && args.length > 0 && "enableClipping".equals(args[0]);
     }
 }

@@ -1,14 +1,11 @@
 package com.example.canvas.element;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Generated;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Generated
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class Line extends Element {
     private List<Pixel> pixels;
 
@@ -16,6 +13,7 @@ public class Line extends Element {
         super(start, end);
     }
 
+    @Override
     List<Pixel> draw(boolean enableClipping) {
         if (this.pixels == null) {
             this.pixels = new ArrayList<>();
@@ -31,6 +29,7 @@ public class Line extends Element {
                 }
             }
         }
+
         return this.pixels;
     }
 }
