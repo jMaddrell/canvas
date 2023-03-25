@@ -16,6 +16,7 @@ import java.util.Stack;
 @EqualsAndHashCode
 public class Canvas extends Element {
     public static final String INVALID_ELEMENT_LOCATION_MESSAGE = "Element must be within the bounds of the canvas";
+    public static final String INVALID_LINE_MESSAGE = "Not a valid line, diagonals are not supported";
     @Getter
     private final int width;
 
@@ -76,12 +77,9 @@ public class Canvas extends Element {
 
         boolean onCanvas = isOnCanvas(start) && isOnCanvas(end);
 
-        //    TODO: Test bounds checking on element creation
-
         if (element instanceof Line) {
             if (start.getX() != end.getX() && start.getY() != end.getY()) {
-//                TODO: test
-                throw new InvalidArgumentsException("Not a valid line, diagonals are not supported");
+                throw new InvalidArgumentsException(INVALID_LINE_MESSAGE);
             }
         }
 
