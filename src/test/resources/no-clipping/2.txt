@@ -1,0 +1,6 @@
+----------------------
+|xxxxxxxx            |
+|x    xxxxxxxxxxx    |
+|xxxxxx         x    |
+|     xxxxxxxxxxx    |
+----------------------
