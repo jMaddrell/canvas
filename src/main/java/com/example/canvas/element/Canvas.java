@@ -18,7 +18,6 @@ public class Canvas extends Element {
     public static final String INVALID_RECT_MESSAGE = "Not a valid rectangle, must not be a line";
     @Getter
     private final int width;
-
     @Getter
     private final int height;
 
@@ -38,7 +37,7 @@ public class Canvas extends Element {
 
         // Create a blank canvas
         for (var y = 0; y < this.height; y++) {
-            Arrays.fill(buffer[y], ' ');
+            Arrays.fill(buffer[y], BLANK);
         }
 
         // Draw the elements onto the canvas starting at the oldest

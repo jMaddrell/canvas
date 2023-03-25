@@ -25,7 +25,7 @@ public class Line extends Element {
 
             for (var x = minX; x <= maxX; x++) {
                 for (var y = minY; y <= maxY; y++) {
-                    this.pixels.add(new Pixel(x, y, 'x'));
+                    this.pixels.add(new Pixel(x, y, OCCUPIED));
                 }
             }
         }

@@ -7,6 +7,9 @@ import java.util.List;
 
 @AllArgsConstructor
 public abstract class Element {
+    public static final char BLANK = ' ';
+    public static final char OCCUPIED = 'x';
+
     @Getter
     protected Pixel start;
     @Getter
