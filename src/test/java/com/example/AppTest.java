@@ -146,6 +146,36 @@ class AppTest {
     }
 
     @Test
+    void itDisplaysErrorIfCanvasNotCreated() throws InterruptedException {
+        PrintStream standardOut = System.out;
+        InputStream stdIn = System.in;
+
+        ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStreamCaptor));
+
+
+        var testInput = String.format(
+                "L 1 2 6 2%sQ%s",
+                System.lineSeparator(),
+                System.lineSeparator()
+        );
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(testInput.getBytes());
+        System.setIn(inputStream);
+
+        var app = new App(false);
+
+        new Thread(() -> App.main(null)).start();
+
+        await().atMost(5, SECONDS)
+                .untilAsserted(() -> assertThat(outputStreamCaptor.toString()).isEqualTo(contentOf(this.getClass().getResource("/input/2.txt"))));
+
+        // Restore stdout & stdin
+        System.setOut(standardOut);
+        System.setIn(stdIn);
+    }
+
+    @Test
     void itParsesArguments() {
         assertThat(App.isClippingEnabled(null)).isFalse();
         assertThat(App.isClippingEnabled(new String[]{"en"})).isFalse();

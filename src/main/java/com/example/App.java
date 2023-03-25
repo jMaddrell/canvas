@@ -59,8 +59,14 @@ public class App {
             if (data instanceof Canvas) {
                 this.consoleRenderer.setCanvas((Canvas) data);
             } else {
-                //TODO check for null canvas + error msg
-                this.consoleRenderer.getCanvas().addElement(data);
+                Canvas canvas = this.consoleRenderer.getCanvas();
+
+                if (canvas == null) {
+                    System.out.println();
+                    System.out.println("Please create a canvas first.");
+                } else {
+                    this.consoleRenderer.getCanvas().addElement(data);
+                }
             }
         }
 
