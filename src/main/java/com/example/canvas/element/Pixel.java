@@ -18,6 +18,7 @@ public class Pixel {
         if (x <= 0 || y <= 0) {
             throw new InvalidArgumentsException(INVALID_COORDINATE_MESSAGE);
         }
+
         this.x = x;
         this.y = y;
     }

@@ -28,6 +28,7 @@ public class Line extends Element {
                 }
             }
         }
+
         return this.pixels;
     }
 }

@@ -99,13 +99,10 @@ public class App {
     public static boolean isClippingEnabled(String[] args) {
         var enableClipping = false;
 
-        if (args != null && args.length > 0) {
-            var arg = args[0];
-
-            if ("enableClipping".equals(arg)) {
-                enableClipping = true;
-            }
+        if (args != null && args.length > 0 && "enableClipping".equals(args[0])) {
+            enableClipping = true;
         }
+
         return enableClipping;
     }
 }

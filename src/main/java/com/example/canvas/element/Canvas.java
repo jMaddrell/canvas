@@ -77,10 +77,12 @@ public class Canvas extends Element {
         boolean onCanvas = isOnCanvas(start) && isOnCanvas(end);
 
         if (element instanceof Line) {
+            // Cant be a diagonal
             if (start.getX() != end.getX() && start.getY() != end.getY()) {
                 throw new InvalidArgumentsException(INVALID_LINE_MESSAGE);
             }
         } else if (element instanceof Rectangle) {
+            // Cant be a line
             if (start.getX() == end.getX() || start.getY() == end.getY()) {
                 throw new InvalidArgumentsException(INVALID_RECT_MESSAGE);
             }

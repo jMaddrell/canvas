@@ -33,6 +33,7 @@ public class Rectangle extends Element {
                 }
             }
         }
+
         return this.pixels;
     }
 }

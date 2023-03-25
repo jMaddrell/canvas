@@ -21,7 +21,6 @@ public class HelpCommand implements Command {
             System.lineSeparator();
 
     public Try<Element> invoke(StringTokenizer tokenizer) {
-
         return Try.failure(new InvalidArgumentsException(HELP_MESSAGE));
     }
 }
