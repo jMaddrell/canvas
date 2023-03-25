@@ -29,7 +29,6 @@ public class App {
     }
 
     public void run() {
-//        TODO: test
         boolean quit = false;
 
         try (Scanner scanner = new Scanner(System.in)) {
@@ -37,6 +36,7 @@ public class App {
                 this.consoleRenderer.display();
                 System.out.print("enter command: ");
                 quit = processCommand(scanner.nextLine());
+                System.out.println();
             }
         }
     }

@@ -46,5 +46,4 @@ class CanvasTest {
         assertThat(offRight.getCause()).isInstanceOf(InvalidArgumentsException.class);
         assertThat(offRight.getCause().getMessage()).isEqualTo(Canvas.INVALID_LINE_MESSAGE);
     }
-
 }

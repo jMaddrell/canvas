@@ -20,6 +20,10 @@ or directly:
 java -jar target/canvas-1.0-SNAPSHOT.jar
 ```
 
+## Notes
+If AppTest.itHandlesInput() is failing this is likely because IntelliJ keeps trimming trailing whitespace at the end of lines, 
+please reset the file.
+
 ## Assumptions
 - Shapes cannot clip into each other
   - Newer shapes are placed higher on the canvas than older ones

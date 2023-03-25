@@ -8,13 +8,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.StringTokenizer;
 import java.util.stream.Stream;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.contentOf;
+import static org.awaitility.Awaitility.await;
 import static org.mockito.Mockito.*;
 
 class AppTest {
@@ -28,6 +32,7 @@ class AppTest {
                 Arguments.of("Q", QuitCommand.class)
         );
     }
+
     @ParameterizedTest
     @MethodSource("commandsProvider")
     void itParsesCommandsCorrectly(String input, Class commandType) {
@@ -87,6 +92,7 @@ class AppTest {
                 Arguments.of("R 1 1 8 3", new Rectangle(new Pixel(1, 1), new Pixel(8, 3)))
         );
     }
+
     @ParameterizedTest
     @MethodSource("elementsProvider")
     void itAddsElementToCanvas(String input, Element element) {
@@ -108,6 +114,34 @@ class AppTest {
         verify(renderer, times(1)).setCanvas(eq(new Canvas(20, 4)));
     }
 
-//    TODO: processCommand() - with valid values
-//    TODO: run()
+    @Test
+    void itHandlesInput() throws InterruptedException {
+        PrintStream standardOut = System.out;
+        InputStream stdIn = System.in;
+
+        ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStreamCaptor));
+
+
+        var testInput = String.format(
+                "C 20 4%sL 1 2 6 2%sQ%s",
+                System.lineSeparator(),
+                System.lineSeparator(),
+                System.lineSeparator()
+        );
+
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(testInput.getBytes());
+        System.setIn(inputStream);
+
+        var app = new App(false);
+
+        new Thread(() -> App.main(null)).start();
+
+        await().atMost(5, SECONDS)
+                .untilAsserted(() -> assertThat(outputStreamCaptor.toString()).isEqualTo(contentOf(this.getClass().getResource("/input/1.txt"))));
+
+        // Restore stdout & stdin
+        System.setOut(standardOut);
+        System.setIn(stdIn);
+    }
 }
