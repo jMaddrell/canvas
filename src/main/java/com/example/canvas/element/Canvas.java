@@ -15,6 +15,7 @@ import java.util.Stack;
 @Generated
 @EqualsAndHashCode
 public class Canvas extends Element {
+    public static final String INVALID_ELEMENT_LOCATION_MESSAGE = "Element must be within the bounds of the canvas";
     @Getter
     private final int width;
 
@@ -65,8 +66,7 @@ public class Canvas extends Element {
                 return this.elements.add(element);
             }
 
-//            TODO: test
-            throw new InvalidArgumentsException("Element must be within the bounds of the canvas");
+            throw new InvalidArgumentsException(INVALID_ELEMENT_LOCATION_MESSAGE);
         });
     }
 
