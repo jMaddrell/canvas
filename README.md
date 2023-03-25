@@ -21,8 +21,12 @@ java -jar target/canvas-1.0-SNAPSHOT.jar
 ```
 
 ## Notes
+- Tested on macOS 13 (arm64) with OpenJDK 17
+- Tested on Windows 11 with Azul 11
+- Tested on ubuntu via GitHub Actions with temurin 11
 - If AppTest.itHandlesInput() is failing this is likely because IntelliJ keeps trimming trailing whitespace at the end of lines, please reset the file.
 - To enable object to clip into each other pass "enableClipping" as an argument eg:
+
 ```shell
 mvn exec:java -Dexec.args="enableClipping"
 ```
@@ -30,9 +34,6 @@ or directly:
 ```shell
 java -jar target/canvas-1.0-SNAPSHOT.jar enableClipping
 ```
-
-- Tested on macOS 13 (arm64) with OpenJDK 17
-- Tested on ubuntu via GitHub Actions with temurin 11
 
 ## Assumptions
 - Shapes cannot clip into each other
