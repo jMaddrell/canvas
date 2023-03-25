@@ -38,9 +38,6 @@ class ConsoleRendererNoClippingTest {
 
         assertThat(renderer.draw()).isEqualTo(contentOf(this.getClass().getResource(exampleOutput)));
     }
-
-
-//TODO: Test for clipping support?
 //    TODO: Test command parsing
 //    TODO: Test bounds checking on element creation
 }
