@@ -33,6 +33,7 @@ jobs:
       run: mvn -B verify package --file pom.xml
     - name: Add coverage to PR
       id: jacoco
+      if: success() || failure()
       uses: madrapps/jacoco-report@v1.3
       with:
         paths: ${{ github.workspace }}/target/site/jacoco/jacoco.xml
