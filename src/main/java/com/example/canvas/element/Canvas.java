@@ -18,7 +18,6 @@ public class Canvas extends Element {
     public static final String INVALID_RECT_MESSAGE = "Not a valid rectangle, must not be a line";
     @Getter
     private final int width;
-
     @Getter
     private final int height;
 
