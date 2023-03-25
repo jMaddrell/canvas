@@ -1,7 +1,6 @@
 package com.example;
 
 import com.example.canvas.element.Canvas;
-import com.example.canvas.element.Element;
 import com.example.command.CanvasCommand;
 import com.example.command.Command;
 import com.example.command.HelpCommand;
