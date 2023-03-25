@@ -1,7 +1,10 @@
 package com.example.rendering;
 
 
-import com.example.canvas.element.*;
+import com.example.canvas.element.Canvas;
+import com.example.canvas.element.Element;
+import com.example.canvas.element.Pixel;
+import com.example.canvas.element.Rectangle;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -38,6 +41,4 @@ class ConsoleRendererNoClippingTest {
 
         assertThat(renderer.draw()).isEqualTo(contentOf(this.getClass().getResource(exampleOutput)));
     }
-//    TODO: Test command parsing
-//    TODO: Test bounds checking on element creation
 }

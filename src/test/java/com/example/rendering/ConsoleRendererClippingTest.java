@@ -42,6 +42,4 @@ class ConsoleRendererClippingTest {
 
         assertThat(renderer.draw()).isEqualTo(contentOf(this.getClass().getResource(exampleOutput)));
     }
-//    TODO: Test command parsing
-//    TODO: Test bounds checking on element creation
 }

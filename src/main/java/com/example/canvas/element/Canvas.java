@@ -2,6 +2,8 @@ package com.example.canvas.element;
 
 import com.example.exception.InvalidArgumentsException;
 import io.vavr.control.Try;
+import lombok.EqualsAndHashCode;
+import lombok.Generated;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -9,6 +11,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
+
+@Generated
+@EqualsAndHashCode
 public class Canvas extends Element {
     @Getter
     private final int width;
@@ -30,7 +35,7 @@ public class Canvas extends Element {
         char[][] buffer = new char[this.height][this.width];
 
         // Create a blank canvas
-        for (int y = 0; y < this.height; y++) {
+        for (var y = 0; y < this.height; y++) {
             Arrays.fill(buffer[y], ' ');
         }
 
@@ -45,8 +50,8 @@ public class Canvas extends Element {
         // Convert the buffer to a list of pixels
         // Could potentially remove this and return the buffer directly to speed up rendering
         // however it's required for now as Canvas extends Element
-        for (int y = 0; y < this.height; y++) {
-            for (int x = 0; x < this.width; x++) {
+        for (var y = 0; y < this.height; y++) {
+            for (var x = 0; x < this.width; x++) {
                 pixels.add(new Pixel(x, y, buffer[y][x]));
             }
         }
@@ -60,6 +65,7 @@ public class Canvas extends Element {
                 return this.elements.add(element);
             }
 
+//            TODO: test
             throw new InvalidArgumentsException("Element must be within the bounds of the canvas");
         });
     }
@@ -70,8 +76,11 @@ public class Canvas extends Element {
 
         boolean onCanvas = isOnCanvas(start) && isOnCanvas(end);
 
+        //    TODO: Test bounds checking on element creation
+
         if (element instanceof Line) {
             if (start.getX() != end.getX() && start.getY() != end.getY()) {
+//                TODO: test
                 throw new InvalidArgumentsException("Not a valid line, diagonals are not supported");
             }
         }
@@ -80,6 +89,7 @@ public class Canvas extends Element {
     }
 
     private boolean isOnCanvas(Pixel pixel) {
+//        TODO: test
         return (pixel.getX() > 0 && pixel.getX() <= width && pixel.getY() > 0 && pixel.getY() <= height);
     }
 }

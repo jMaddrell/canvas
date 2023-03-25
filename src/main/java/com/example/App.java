@@ -14,12 +14,14 @@ import io.vavr.control.Try;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-import static io.vavr.API.*;
+import static io.vavr.API.$;
+import static io.vavr.API.Case;
+import static io.vavr.API.Match;
 
 public class App {
     private boolean enableClipping;
 
-    private ConsoleRenderer consoleRenderer;
+    protected ConsoleRenderer consoleRenderer;
 
     public App(boolean enableClipping) {
         this.enableClipping = enableClipping;
@@ -27,6 +29,7 @@ public class App {
     }
 
     public void run() {
+//        TODO: test
         boolean quit = false;
 
         try (Scanner scanner = new Scanner(System.in)) {
@@ -39,19 +42,9 @@ public class App {
     }
 
     public boolean processCommand(String input) {
-        StringTokenizer tokenizer = new StringTokenizer(input, " ");
+        var tokenizer = new StringTokenizer(input, " ");
 
-        if (!tokenizer.hasMoreTokens()) {
-            return false;
-        }
-
-        var command = Match(tokenizer.nextToken()).of(
-                Case($("Q"), new QuitCommand()),
-                Case($("C"), new CanvasCommand()),
-                Case($("L"), new LineCommand()),
-                Case($("R"), new RectangleCommand()),
-                Case($(), new HelpCommand())
-        );
+        var command = getCommand(tokenizer);
 
         Try<Element> element = command.invoke(tokenizer);
 
@@ -72,6 +65,21 @@ public class App {
         }
 
         return false;
+    }
+
+    protected static Command getCommand(StringTokenizer tokenizer) {
+        if (tokenizer.hasMoreTokens()) {
+            var command = Match(tokenizer.nextToken()).of(
+                    Case($("Q"), new QuitCommand()),
+                    Case($("C"), new CanvasCommand()),
+                    Case($("L"), new LineCommand()),
+                    Case($("R"), new RectangleCommand()),
+                    Case($(), new HelpCommand())
+            );
+            return command;
+        }
+
+        return new HelpCommand();
     }
 
     public static void main(String[] args) {

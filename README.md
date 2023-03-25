@@ -1,8 +1,9 @@
 # Canvas
 
-[![Build](https://github.com/jMaddrell/canvas/actions/workflows/maven.yml/badge.svg?branch=main)](https://github.com/jMaddrell/canvas/actions/workflows/maven.yml)
+[![Build](https://github.com/jMaddrell/canvas/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/jMaddrell/canvas/actions/workflows/maven.yml)
 
 ## Building
+This project is built using Maven (tested with 3.8.7):
 
 ```shell
 mvn package
@@ -14,7 +15,7 @@ The application can be launched using maven:
 mvn exec:java
 ```
 
-or directly"
+or directly:
 ```shell
 java -jar target/canvas-1.0-SNAPSHOT.jar
 ```

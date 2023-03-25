@@ -13,16 +13,19 @@ import static io.vavr.API.Case;
 import static io.vavr.Predicates.instanceOf;
 
 public class LineCommand implements Command {
+    public static final String INVALID_COMMAND_MESSAGE = "Invalid command Line needs two coordinates, eg: L x1 y1 x2 y2";
+    public static final String INVALID_NUMBER_MESSAGE = "Line coordinates must be a positive number.";
+
     @SuppressWarnings("unchecked") // .mapFailure is missing @SafeVarargs
     public Try<Element> invoke(StringTokenizer tokenizer) {
         if (tokenizer.countTokens() == 4) {
             return Try.of(() -> {
-                Pixel start = new Pixel(Integer.parseInt(tokenizer.nextToken()), Integer.parseInt(tokenizer.nextToken()));
-                Pixel end = new Pixel(Integer.parseInt(tokenizer.nextToken()), Integer.parseInt(tokenizer.nextToken()));
+                var start = new Pixel(Integer.parseInt(tokenizer.nextToken()), Integer.parseInt(tokenizer.nextToken()));
+                var end = new Pixel(Integer.parseInt(tokenizer.nextToken()), Integer.parseInt(tokenizer.nextToken()));
                 return (Element) new Line(start, end);
-            }).mapFailure(Case($(instanceOf(NumberFormatException.class)), e -> new InvalidArgumentsException("Line coordinates must be a positive number", e)));
+            }).mapFailure(Case($(instanceOf(NumberFormatException.class)), e -> new InvalidArgumentsException(INVALID_NUMBER_MESSAGE, e)));
         }
 
-        return Try.failure(new InvalidArgumentsException("Invalid command Line needs two coordinates, eg: L x1 y1 x2 y2"));
+        return Try.failure(new InvalidArgumentsException(INVALID_COMMAND_MESSAGE));
     }
 }
