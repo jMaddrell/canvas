@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import java.util.ArrayList;
 import java.util.List;
 
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class Rectangle extends Element {
     private List<Pixel> pixels;
 
@@ -13,6 +13,7 @@ public class Rectangle extends Element {
         super(start, end);
     }
 
+    @Override
     List<Pixel> draw(boolean enableClipping) {
         if (this.pixels == null) {
             var minX = Math.min(this.start.getX(), this.end.getX());

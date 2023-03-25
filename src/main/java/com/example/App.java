@@ -65,7 +65,8 @@ public class App {
                     System.out.println();
                     System.out.println("Please create a canvas first.");
                 } else {
-                    Try<Boolean> result = this.consoleRenderer.getCanvas().addElement(data);
+                    Try<Boolean> result = canvas.addElement(data);
+
                     if (result.isFailure()) {
                         System.out.println(result.getCause().getMessage());
                     }
@@ -78,14 +79,13 @@ public class App {
 
     protected static Command getCommand(StringTokenizer tokenizer) {
         if (tokenizer.hasMoreTokens()) {
-            var command = Match(tokenizer.nextToken()).of(
+            return Match(tokenizer.nextToken()).of(
                     Case($("Q"), new QuitCommand()),
                     Case($("C"), new CanvasCommand()),
                     Case($("L"), new LineCommand()),
                     Case($("R"), new RectangleCommand()),
                     Case($(), new HelpCommand())
             );
-            return command;
         }
 
         return new HelpCommand();
@@ -97,12 +97,6 @@ public class App {
     }
 
     public static boolean isClippingEnabled(String[] args) {
-        var enableClipping = false;
-
-        if (args != null && args.length > 0 && "enableClipping".equals(args[0])) {
-            enableClipping = true;
-        }
-
-        return enableClipping;
+        return args != null && args.length > 0 && "enableClipping".equals(args[0]);
     }
 }

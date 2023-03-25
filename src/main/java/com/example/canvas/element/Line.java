@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import java.util.ArrayList;
 import java.util.List;
 
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class Line extends Element {
     private List<Pixel> pixels;
 
@@ -13,6 +13,7 @@ public class Line extends Element {
         super(start, end);
     }
 
+    @Override
     List<Pixel> draw(boolean enableClipping) {
         if (this.pixels == null) {
             this.pixels = new ArrayList<>();
