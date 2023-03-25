@@ -144,4 +144,12 @@ class AppTest {
         System.setOut(standardOut);
         System.setIn(stdIn);
     }
+
+    @Test
+    void itParsesArguments() {
+        assertThat(App.isClippingEnabled(null)).isFalse();
+        assertThat(App.isClippingEnabled(new String[]{"en"})).isFalse();
+        assertThat(App.isClippingEnabled(new String[]{"enableClipping=true"})).isFalse();
+        assertThat(App.isClippingEnabled(new String[]{"enableClipping"})).isTrue();
+    }
 }

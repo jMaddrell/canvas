@@ -19,13 +19,12 @@ import static io.vavr.API.Case;
 import static io.vavr.API.Match;
 
 public class App {
-    private boolean enableClipping;
 
     protected ConsoleRenderer consoleRenderer;
 
     public App(boolean enableClipping) {
-        this.enableClipping = enableClipping;
         this.consoleRenderer = new ConsoleRenderer();
+        this.consoleRenderer.setEnableClipping(enableClipping);
     }
 
     public void run() {
@@ -60,6 +59,7 @@ public class App {
             if (data instanceof Canvas) {
                 this.consoleRenderer.setCanvas((Canvas) data);
             } else {
+                //TODO check for null canvas + error msg
                 this.consoleRenderer.getCanvas().addElement(data);
             }
         }
@@ -83,6 +83,20 @@ public class App {
     }
 
     public static void main(String[] args) {
-        new App(false).run();
+        boolean enableClipping = isClippingEnabled(args);
+        new App(enableClipping).run();
+    }
+
+    public static boolean isClippingEnabled(String[] args) {
+        var enableClipping = false;
+
+        if (args != null && args.length > 0) {
+            var arg = args[0];
+
+            if ("enableClipping".equals(arg)) {
+                enableClipping = true;
+            }
+        }
+        return enableClipping;
     }
 }
