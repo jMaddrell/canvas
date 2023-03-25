@@ -22,7 +22,7 @@ class CanvasTest {
                 Arguments.of(new Rectangle(new Pixel(20, 1), new Pixel(21, 3))),
                 Arguments.of(new Rectangle(new Pixel(21, 1), new Pixel(23, 4))),
                 Arguments.of(new Rectangle(new Pixel(5, 4), new Pixel(7, 5))),
-                Arguments.of(new Rectangle(new Pixel(5, 5), new Pixel(5, 7)))
+                Arguments.of(new Rectangle(new Pixel(5, 5), new Pixel(7, 7)))
         );
     }
 
@@ -40,10 +40,26 @@ class CanvasTest {
     @Test
     void itPreventsDiagonalLines() {
         var canvas = new Canvas(20, 4);
-        Try<Boolean> offRight = canvas.addElement(new Line(new Pixel(1, 1), new Pixel(3, 3)));
+        Try<Boolean> diagonal = canvas.addElement(new Line(new Pixel(1, 1), new Pixel(3, 3)));
 
-        assertThat(offRight.isFailure()).isTrue();
-        assertThat(offRight.getCause()).isInstanceOf(InvalidArgumentsException.class);
-        assertThat(offRight.getCause().getMessage()).isEqualTo(Canvas.INVALID_LINE_MESSAGE);
+        assertThat(diagonal.isFailure()).isTrue();
+        assertThat(diagonal.getCause()).isInstanceOf(InvalidArgumentsException.class);
+        assertThat(diagonal.getCause().getMessage()).isEqualTo(Canvas.INVALID_LINE_MESSAGE);
+    }
+
+    @Test
+    void itPreventsInvalidRectangles() {
+        var canvas = new Canvas(20, 4);
+        Try<Boolean> lineY = canvas.addElement(new Rectangle(new Pixel(1, 1), new Pixel(3, 1)));
+
+        assertThat(lineY.isFailure()).isTrue();
+        assertThat(lineY.getCause()).isInstanceOf(InvalidArgumentsException.class);
+        assertThat(lineY.getCause().getMessage()).isEqualTo(Canvas.INVALID_RECT_MESSAGE);
+
+        Try<Boolean> lineX = canvas.addElement(new Rectangle(new Pixel(1, 1), new Pixel(1, 3)));
+
+        assertThat(lineX.isFailure()).isTrue();
+        assertThat(lineX.getCause()).isInstanceOf(InvalidArgumentsException.class);
+        assertThat(lineX.getCause().getMessage()).isEqualTo(Canvas.INVALID_RECT_MESSAGE);
     }
 }
