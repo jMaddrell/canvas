@@ -9,6 +9,8 @@ import java.util.Comparator;
 import java.util.stream.Collectors;
 
 public class ConsoleRenderer {
+    public static final String BORDER_Y = "-";
+    public static final char BORDER_X = '|';
     @Getter
     @Setter
     private Canvas canvas;
@@ -32,7 +34,7 @@ public class ConsoleRenderer {
             var borderWidth = this.getCanvas().getWidth() + 2;
 
             // Top of the border
-            output.append("-".repeat(borderWidth));
+            output.append(BORDER_Y.repeat(borderWidth));
             output.append(System.lineSeparator());
 
             for (var y = 0; y < this.canvas.getHeight(); y++) {
@@ -45,14 +47,14 @@ public class ConsoleRenderer {
                         .map(Object::toString)
                         .collect(Collectors.joining());
 
-                output.append('|');
+                output.append(BORDER_X);
                 output.append(pixels);
-                output.append('|');
+                output.append(BORDER_X);
                 output.append(System.lineSeparator());
             }
 
             // Bottom of the border
-            output.append("-".repeat(borderWidth));
+            output.append(BORDER_Y.repeat(borderWidth));
 
             return output.toString();
         }

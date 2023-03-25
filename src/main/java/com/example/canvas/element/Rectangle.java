@@ -26,10 +26,10 @@ public class Rectangle extends Element {
             for (var y = minY; y <= maxY; y++) {
                 for (var x = minX; x <= maxX; x++) {
                     if (x == minX || x == maxX || y == minY || y == maxY) {
-                        this.pixels.add(new Pixel(x, y, 'x'));
+                        this.pixels.add(new Pixel(x, y, OCCUPIED));
                     } else if (!enableClipping) {
                         // Fill the centre when clipping is disabled
-                        this.pixels.add(new Pixel(x, y, ' '));
+                        this.pixels.add(new Pixel(x, y, BLANK));
                     }
                 }
             }

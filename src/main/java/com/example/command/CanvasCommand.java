@@ -18,14 +18,14 @@ public class CanvasCommand implements Command {
 
     @SuppressWarnings("unchecked") // .mapFailure is missing @SafeVarargs
     public Try<Element> invoke(StringTokenizer tokenizer) {
-        if (tokenizer.countTokens() == 2) {
-            return Try.of(() -> {
-                var width = Integer.parseInt(tokenizer.nextToken());
-                var height = Integer.parseInt(tokenizer.nextToken());
-                return (Element) new Canvas(width, height);
-            }).mapFailure(Case($(instanceOf(NumberFormatException.class)), e -> new InvalidArgumentsException(INVALID_NUMBER_MESSAGE, e)));
+        if (tokenizer.countTokens() != 2) {
+            return Try.failure(new InvalidArgumentsException(INVALID_COMMAND_MESSAGE));
         }
 
-        return Try.failure(new InvalidArgumentsException(INVALID_COMMAND_MESSAGE));
+        return Try.of(() -> {
+            var width = Integer.parseInt(tokenizer.nextToken());
+            var height = Integer.parseInt(tokenizer.nextToken());
+            return (Element) new Canvas(width, height);
+        }).mapFailure(Case($(instanceOf(NumberFormatException.class)), e -> new InvalidArgumentsException(INVALID_NUMBER_MESSAGE, e)));
     }
 }
