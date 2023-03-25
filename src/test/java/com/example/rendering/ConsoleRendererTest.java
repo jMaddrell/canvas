@@ -1,10 +1,7 @@
 package com.example.rendering;
 
 
-import com.example.canvas.element.Canvas;
-import com.example.canvas.element.Element;
-import com.example.canvas.element.Pixel;
-import com.example.canvas.element.Rectangle;
+import com.example.canvas.element.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -14,22 +11,21 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.contentOf;
-
-class ConsoleRendererClippingTest {
+class ConsoleRendererTest {
     private static ConsoleRenderer renderer;
 
     @BeforeAll
     static void setup() {
         renderer = new ConsoleRenderer();
-        renderer.setEnableClipping(true);
         renderer.setCanvas(new Canvas(20, 4));
     }
 
     private static Stream<Arguments> examplesProvider() {
         return Stream.of(
                 Arguments.of(null, "/examples/1.txt"),
-                Arguments.of(new Rectangle(new Pixel(1, 1), new Pixel(8, 3)), "/clipping/1.txt"),
-                Arguments.of(new Rectangle(new Pixel(6,2), new Pixel(16,4)), "/clipping/2.txt")
+                Arguments.of(new Line(new Pixel(1, 2), new Pixel(6, 2)), "/examples/2.txt"),
+                Arguments.of(new Line(new Pixel(6,3), new Pixel(6,4)), "/examples/3.txt"),
+                Arguments.of(new Rectangle(new Pixel(16, 1), new Pixel(20, 3)), "/examples/4.txt")
         );
     }
 
