@@ -42,5 +42,4 @@ class ConsoleRendererExamplesTest {
 
         assertThat(renderer.draw()).isEqualTo(contentOf(this.getClass().getResource(exampleOutput)));
     }
-//TODO: Check tests run on windows (/ vs \)
 }
