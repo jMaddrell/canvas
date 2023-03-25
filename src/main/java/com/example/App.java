@@ -1,13 +1,13 @@
 package com.example;
 
 import com.example.canvas.element.Canvas;
-import com.example.canvas.element.Element;
 import com.example.command.CanvasCommand;
 import com.example.command.Command;
 import com.example.command.HelpCommand;
 import com.example.command.LineCommand;
 import com.example.command.QuitCommand;
 import com.example.command.RectangleCommand;
+import com.example.exception.QuitException;
 import com.example.rendering.ConsoleRenderer;
 import io.vavr.control.Try;
 
@@ -45,33 +45,34 @@ public class App {
 
         var command = getCommand(tokenizer);
 
-        Try<Element> element = command.invoke(tokenizer);
+        Try<Boolean> result = command.invoke(tokenizer)
+                .onSuccess(data -> {
+                    if (data instanceof Canvas) {
+                        this.consoleRenderer.setCanvas((Canvas) data);
+                    } else {
+                        Canvas canvas = this.consoleRenderer.getCanvas();
 
-        if (element.isFailure()) {
-            if (element.getCause() instanceof com.example.exception.QuitException) {
-                return true;
-            }
+                        if (canvas == null) {
+                            System.out.println();
+                            System.out.println("Please create a canvas first.");
+                        } else {
+                            canvas.addElement(data)
+                                    .onFailure(t -> System.out.println(t.getMessage()));
+                        }
+                    }
+                })
+                .map(data -> false)
+                .recover(t -> {
+                    if (t instanceof QuitException) {
+                        return true;
+                    }
 
-            System.out.println(element.getCause().getMessage());
-        } else {
-            Element data = element.get();
+                    System.out.println(t.getMessage());
+                    return false;
+                });
 
-            if (data instanceof Canvas) {
-                this.consoleRenderer.setCanvas((Canvas) data);
-            } else {
-                Canvas canvas = this.consoleRenderer.getCanvas();
 
-                if (canvas == null) {
-                    System.out.println();
-                    System.out.println("Please create a canvas first.");
-                } else {
-                    canvas.addElement(data)
-                            .onFailure(t -> System.out.println(t.getMessage()));
-                }
-            }
-        }
-
-        return false;
+        return result.get();
     }
 
     protected static Command getCommand(StringTokenizer tokenizer) {
