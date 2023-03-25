@@ -1,8 +1,8 @@
 package com.example;
 
-import com.example.canvas.element.Canvas;
-import com.example.canvas.element.Pixel;
+import com.example.canvas.element.*;
 import com.example.command.*;
+import com.example.rendering.ConsoleRenderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.contentOf;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 class AppTest {
     private static Stream<Arguments> commandsProvider() {
@@ -79,6 +79,33 @@ class AppTest {
 
         // Restore stdout
         System.setOut(standardOut);
+    }
+
+    private static Stream<Arguments> elementsProvider() {
+        return Stream.of(
+                Arguments.of("L 1 2 6 2", new Line(new Pixel(1, 2), new Pixel(6, 2))),
+                Arguments.of("R 1 1 8 3", new Rectangle(new Pixel(1, 1), new Pixel(8, 3)))
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("elementsProvider")
+    void itAddsElementToCanvas(String input, Element element) {
+        var app = new App(false);
+        var canvas = mock(Canvas.class);
+        app.consoleRenderer.setCanvas(canvas);
+        app.processCommand(input);
+
+        verify(canvas, times(1)).addElement(eq(element));
+    }
+
+    @Test
+    void itCreatesCanvas() {
+        var app = new App(false);
+        var renderer = mock(ConsoleRenderer.class);
+        app.consoleRenderer = renderer;
+        app.processCommand("C 20 4");
+
+        verify(renderer, times(1)).setCanvas(eq(new Canvas(20, 4)));
     }
 
 //    TODO: processCommand() - with valid values

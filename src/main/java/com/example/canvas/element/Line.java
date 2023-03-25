@@ -1,10 +1,14 @@
 package com.example.canvas.element;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Generated;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Generated
+@EqualsAndHashCode
 public class Line extends Element {
     private List<Pixel> pixels;
 

@@ -3,8 +3,10 @@ package com.example.canvas.element;
 import com.example.exception.InvalidArgumentsException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Generated;
 
 @Data
+@Generated
 @AllArgsConstructor
 public class Pixel {
     public static final String INVALID_COORDINATE_MESSAGE = "Only coordinates greater than x: 1, y: 1 are supported.";

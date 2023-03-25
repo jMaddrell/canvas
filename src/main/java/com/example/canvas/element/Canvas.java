@@ -2,6 +2,8 @@ package com.example.canvas.element;
 
 import com.example.exception.InvalidArgumentsException;
 import io.vavr.control.Try;
+import lombok.EqualsAndHashCode;
+import lombok.Generated;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -9,6 +11,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
+
+@Generated
+@EqualsAndHashCode
 public class Canvas extends Element {
     @Getter
     private final int width;
