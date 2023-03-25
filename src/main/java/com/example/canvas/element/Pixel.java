@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Pixel {
-    public static final String INVALID_COORDINATE_MESSAGE = "Only coordinates greater than x: 1, y: 1 are supported.";
+    public static final String INVALID_COORDINATE_MESSAGE = "Only coordinates greater or equal to than x: 1, y: 1 are supported.";
     private int x;
 
     private int y;
