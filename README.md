@@ -39,7 +39,7 @@ java -jar target/canvas-1.0-SNAPSHOT.jar enableClipping
 - Shapes cannot clip into each other
   - Newer shapes are placed higher on the canvas than older ones
   - However, clipping can be enabled and tests are written to cover this functionality
-- Elements cannot be drawn entirely are partially off the edge of the canvas
+- Elements cannot be drawn entirely or partially off the edge of the canvas
   - Drawing elements off the canvas can be used in some tools to hide them
 - Canvas 'frame' is a visual aide since it is being drawn on the console
 
