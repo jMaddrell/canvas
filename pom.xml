@@ -18,7 +18,7 @@
         <!-- Deps -->
         <lombok.version>1.18.26</lombok.version>
         <vavr.version>0.10.4</vavr.version>
-        <mockito.version>5.2.0</mockito.version>
+        <mockito.version>5.3.1</mockito.version>
         <awaitility.version>4.2.0</awaitility.version>
         <junit.version>5.9.2</junit.version>
         <assertj.version>3.24.2</assertj.version>
